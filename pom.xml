@@ -20,6 +20,8 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+			<!-- import 该包不应该传递spring-boot-starter的依赖 一旦发布为jar,Spring-boot-starter的版本也会固定 -->
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>
