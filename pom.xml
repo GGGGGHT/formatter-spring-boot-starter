@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.gggggght</groupId>
 	<artifactId>formatter-spring-boot-starter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>formatter-spring-boot-starter</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -21,6 +21,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 			<!-- import 该包不应该传递spring-boot-starter的依赖 一旦发布为jar,Spring-boot-starter的版本也会固定 -->
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
