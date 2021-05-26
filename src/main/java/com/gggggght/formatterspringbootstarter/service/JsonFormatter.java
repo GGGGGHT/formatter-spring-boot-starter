@@ -5,7 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonFormatter implements Formatter {
 	private final ObjectMapper objectMapper;
 
-	public JsonFormatter() {this.objectMapper = new ObjectMapper();}
+	public JsonFormatter() {
+		this(new ObjectMapper());
+	}
+
+	public JsonFormatter(ObjectMapper mapper) {this.objectMapper = mapper;}
+
 
 	@Override
 	public String format(Object object) {
