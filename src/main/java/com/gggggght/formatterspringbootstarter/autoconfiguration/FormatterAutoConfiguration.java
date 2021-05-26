@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gggggght.formatterspringbootstarter.service.Formatter;
 import com.gggggght.formatterspringbootstarter.service.JsonFormatter;
 import com.gggggght.formatterspringbootstarter.service.impl.DefaultFormatter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
  * 当ObjectMapper类存在时且bean存在 会自动注入JsonFormatter beanName: objectMapperFormatter
  */
 @Configuration
+// 当系统属性formatter.enabled为true时，才开始自动装配
+@ConditionalOnProperty(prefix = "formatter", name = "enabled", havingValue = "true",matchIfMissing = true)
 public class FormatterAutoConfiguration {
 	/**
 	 * 构建 {@link DefaultFormatter} Bean
@@ -35,14 +34,14 @@ public class FormatterAutoConfiguration {
 	 * @return {@link JsonFormatter}
 	 */
 	@Bean
-	@ConditionalOnClass(name = "com.fasterxml.jackson.databind.ObjectMapper")
-	@ConditionalOnMissingBean(type = "com.fasterxml.jackson.databind.ObjectMapper")
+	@ConditionalOnClass(value = ObjectMapper.class)
+	@ConditionalOnMissingBean(name = "com.fasterxml.jackson.databind.ObjectMapper")
 	public Formatter jsonFormatter() {
 		return new JsonFormatter();
 	}
 
 	@Bean
-	@ConditionalOnClass(name = "com.fasterxml.jackson.databind.ObjectMapper")
+	@ConditionalOnClass(value = ObjectMapper.class)
 	@ConditionalOnBean(type = "com.fasterxml.jackson.databind.ObjectMapper")
 	public Formatter objectMapperFormatter(ObjectMapper jacksonObjectMapper) {
 		return new JsonFormatter(jacksonObjectMapper);
